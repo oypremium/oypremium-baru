@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OYPREMIUM - Apps</title>
+
+  <!-- pakai CSS yang sama -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header (SAMA seperti index) -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+
+        <a href="index.html#home" class="logo">
+          <div class="logo-icon">OY</div>
+          <div class="logo-text">
+            <span class="logo-name">OYPREMIUM</span>
+            <span class="logo-sub">App prem & Kebsos</span>
+          </div>
+        </a>
+
+        <nav class="nav" id="mainNav">
+          <a href="index.html#home" class="nav-link">
+            Home
+          </a>
+
+          <a href="apps.html" class="nav-link active">
+            Apps
+          </a>
+
+          <a href="index.html#sosmed" class="nav-link">
+            Sosmed
+          </a>
+
+          <a href="index.html#cart" class="nav-link">
+            Cart
+          </a>
+
+          <span class="nav-indicator" id="navIndicator" aria-hidden="true"></span>
+        </nav>
+
+        <button class="btn-contact" data-wa data-msg="Halo OYPREMIUM, saya ingin konsultasi paket.">
+          Hubungi Admin
+        </button>
+
+        <button class="mobile-toggle" id="mobileToggle">
+          <span></span><span></span><span></span>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu (SAMA) -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#home" class="mobile-link">Home</a>
+    <a href="apps.html" class="mobile-link active">Apps</a>
+    <a href="index.html#sosmed" class="mobile-link">Sosmed</a>
+    <a href="index.html#cart" class="mobile-link">Cart</a>
+  </div>
+
+  <main>
+
+    <!-- Filter -->
+    <section class="filter-section">
+      <div class="container">
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-filter="all">Semua</button>
+          <button class="filter-tab" data-filter="popular">🔥 Populer</button>
+          <button class="filter-tab" data-filter="new">⭐ New</button>
+          <button class="filter-tab" data-filter="editing">📝 Editing</button>
+          <button class="filter-tab" data-filter="movie">🎬 Movie</button>
+          <button class="filter-tab" data-filter="music">🎵 Music</button>
+        </div>
+
+        <div class="search-box">
+          <input type="text" id="searchProduct" placeholder="Cari produk...">
+        </div>
+      </div>
+    </section>
+
+    <!-- Products -->
+    <section class="products" id="apps">
+      <div class="container">
+        <div class="products-grid" id="productsGrid">
+          <!-- card produk kamu tempel di sini -->
+        </div>
+
+        <div class="no-results" id="noResults">
+          <h3>Produk tidak ditemukan</h3>
+          <p>Coba kata kunci lain atau lihat semua produk</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
