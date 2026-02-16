@@ -129,12 +129,14 @@ function handleNavShortcut(hash) {
   const filterSection = document.querySelector('.filter-section');
 
   if (hash === '#apps') {
+    searchInput.value = '';
     activateFilterTab('popular');
     scrollToElementWithOffset(filterSection || document.querySelector('#apps'));
     return true;
   }
 
   if (hash === '#sosmed') {
+    searchInput.value = '';
     activateFilterTab('new');
     scrollToElementWithOffset(filterSection || document.querySelector('#apps'));
     return true;
