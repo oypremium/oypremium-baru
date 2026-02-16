@@ -37,7 +37,15 @@ mobileToggle.addEventListener('click', () => {
 
 // Close mobile menu when clicking links
 mobileMenu.querySelectorAll('.mobile-link').forEach(link => {
-  link.addEventListener('click', () => {
+  link.addEventListener('click', (e) => {
+    const href = link.getAttribute('href') || '';
+    const hash = href.includes('#') ? `#${href.split('#')[1]}` : '';
+
+    if (hash) {
+      e.preventDefault();
+      handleNavShortcut(hash);
+      history.replaceState(null, '', hash);
+    }
     mobileToggle.classList.remove('active');
     mobileMenu.classList.remove('active');
     document.body.style.overflow = '';
@@ -100,7 +108,40 @@ searchInput.addEventListener('input', () => {
   const category = activeTab.getAttribute('data-filter');
   filterProducts(category);
 });
+function activateFilterTab(filterName) {
+  const targetTab = document.querySelector(`.filter-tab[data-filter="${filterName}"]`);
+  if (!targetTab) return;
 
+  targetTab.click();
+}
+
+function scrollToElementWithOffset(target) {
+  if (!target) return;
+
+  const offsetTop = target.offsetTop - 72;
+  window.scrollTo({
+    top: offsetTop,
+    behavior: 'smooth'
+  });
+}
+
+function handleNavShortcut(hash) {
+  const filterSection = document.querySelector('.filter-section');
+
+  if (hash === '#apps') {
+    activateFilterTab('popular');
+    scrollToElementWithOffset(filterSection || document.querySelector('#apps'));
+    return true;
+  }
+
+  if (hash === '#sosmed') {
+    activateFilterTab('new');
+    scrollToElementWithOffset(filterSection || document.querySelector('#apps'));
+    return true;
+  }
+
+  return false;
+}
 // ========================================
 // Product Detail Modal
 // ========================================
@@ -353,6 +394,9 @@ document.addEventListener('keydown', (e) => {
 // ========================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
+    if (this.classList.contains('nav-link') || this.classList.contains('mobile-link')) {
+      return;
+    }
     const href = this.getAttribute('href');
     if (href === '#') {
       e.preventDefault();
@@ -362,11 +406,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const target = document.querySelector(href);
     if (target) {
       e.preventDefault();
-      const offsetTop = target.offsetTop - 72;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: 'smooth'
-      });
+      scrollToElementWithOffset(target);
     }
   });
 });
@@ -578,9 +618,11 @@ document.head.appendChild(modalStyles);
       e.preventDefault();
       setActive(link);
 
-      const target = document.querySelector(hash);
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-
+      const handledByShortcut = handleNavShortcut(hash);
+      if (!handledByShortcut) {
+        const target = document.querySelector(hash);
+        scrollToElementWithOffset(target);
+      }
       history.replaceState(null, "", hash);
     });
   });
@@ -590,7 +632,17 @@ document.head.appendChild(modalStyles);
     // kalau ada hash
     if (location.hash) {
       const byHash = links.find(a => a.getAttribute("href") === location.hash);
-      if (byHash) return setActive(byHash);
+     
+      if (byHash) {
+        setActive(byHash);
+
+        if (!handleNavShortcut(location.hash)) {
+          const target = document.querySelector(location.hash);
+          scrollToElementWithOffset(target);
+        }
+
+        return;
+      }
     }
 
     // default: yang sudah active, kalau tidak ada -> link pertama
